@@ -14,7 +14,6 @@ public class Cast {
 	}
 
 	public Cast(int movieId, String name, String character, String role) {
-		super();
 		this.movieId = movieId;
 		this.name = name;
 		this.character = character;
@@ -57,6 +56,22 @@ public class Cast {
 	public String toString() {
 		return "Cast [movieId=" + movieId + ", name=" + name + ", character=" + character + ", role=" + role + "]\n";
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(movieId, name, character, role);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		Cast other = (Cast) obj;
+		return movieId == other.movieId &&
+				Objects.equals(name, other.name) &&
+				Objects.equals(character, other.character) &&
+				Objects.equals(role, other.role);
+	}
 }

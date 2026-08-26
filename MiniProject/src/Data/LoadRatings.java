@@ -1,6 +1,7 @@
 package Data;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -13,32 +14,46 @@ import Service.UserOperations;
 
 public class LoadRatings {
 	
-	
 	public static void loadRatings(UserOperations userop, MovieOperations movieop, RatingsOperations ratingsop) {
-		
-		BufferedReader reader;
-		{
+		File file = LoadData.getFile("user_ratings.csv");
+		if (!file.exists()) {
+			System.err.println("Warning: user_ratings.csv not found at " + file.getAbsolutePath());
+			return;
+		}
 
-		  try {
-		   reader = new BufferedReader(new FileReader("C:\\Users\\Prasanna Reddy\\Downloads\\user_ratings.csv"));
-		   String line = reader.readLine();
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				line = line.trim();
+				if (line.startsWith("\uFEFF")) {
+					line = line.substring(1).trim();
+				}
+				if (line.isEmpty() || line.startsWith("#")) {
+					continue;
+				}
+				String[] ratingData = line.split(",");
+				if (ratingData.length < 3) {
+					continue;
+				}
+				try {
+					int userId = Integer.parseInt(ratingData[0].trim());
+					int movieId = Integer.parseInt(ratingData[1].trim());
+					int ratingVal = Integer.parseInt(ratingData[2].trim());
 
-		   while (line != null) {
-		    
-		    String[] userData = line.split(",");
-		    User user = userop.getUserbyId(Integer.parseInt(userData[0]));
-		    Movies movie = movieop.getMoviebyId(Integer.parseInt(userData[1]));
-		    Rating r = new Rating(user, movie, Integer.parseInt(userData[2]));
-		    ratingsop.addRatings(r);
-		    user.addRating(r);
-		    line = reader.readLine();
-		   }
+					User user = userop.getUserbyId(userId);
+					Movies movie = movieop.getMoviebyId(movieId);
 
-		   reader.close();
-		  } catch (IOException e) {
-		   e.printStackTrace();
-		  }
-	   }
-		
+					if (user != null && movie != null) {
+						Rating r = new Rating(user, movie, ratingVal);
+						ratingsop.addRatings(r);
+						user.addRating(r);
+					}
+				} catch (NumberFormatException e) {
+					continue;
+				}
+			}
+		} catch (IOException e) {
+			System.err.println("Error reading ratings: " + e.getMessage());
+		}
 	}
 }

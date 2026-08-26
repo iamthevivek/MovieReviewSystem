@@ -1,77 +1,62 @@
 
 # 🎬 Movie Review System
 
-A console-based Java application that allows users to add movies, rate them, and view average ratings. This project demonstrates key Java concepts such as OOP, file handling, and collection frameworks, while following a layered architecture using services and models.
+A console-based Java application that allows users to analyze movies, ratings, users, and calculate average ratings and statistics. This project demonstrates key Java concepts such as OOP, file handling, and collection frameworks, following a layered architecture with services and models.
 
 ---
 
 ## 📁 Project Structure
 
-
-- **Main.java** – Entry point of the application
-- **Data/**
+- **src/Application.java** – Entry point of the application
+- **src/ApplicationOperations.java** – High-level console reporting and display operations
+- **src/Data/**
   - `LoadData.java` – Loads user data from CSV
-  - `LoadMovies.java` – Loads movie data from CSV
+  - `LoadMovies.java` – Loads movie, cast, and crew data from CSV
   - `LoadRatings.java` – Loads rating data from CSV
-- **Model/**
-  - `User.java`, `Movies.java`, `Rating.java` – Entity classes
-  - `Cast.java`, `Crew.java` – Additional metadata classes
-- **Service/**
-  - `UserOperations.java`, `MovieOperations.java`, `RatingsOperations.java` – Interfaces for business logic
-- **ServiceImpl/**
-  - `UserOperationsImpl.java`, `MovieOperationsImpl.java`, `RatingsOperationsImpl.java`, `Application.java`, `ApplicationOperations.java` – Implementation of service logic
+- **src/Model/**
+  - `User.java`, `Movies.java`, `Rating.java` – Core entity classes
+  - `Cast.java`, `Crew.java` – Metadata classes
+- **src/Service/**
+  - `UserOperations.java`, `MovieOperations.java`, `RatingsOperations.java` – Business logic interfaces
+- **src/ServiceImpl/**
+  - `UserOperationsImpl.java`, `MovieOperationsImpl.java`, `RatingsOperationsImpl.java` – Service implementations
+- **data/**
+  - `users.csv`, `movielist.csv`, `movie_crew.csv`, `movie_cast.csv`, `user_ratings.csv` – Sample data files
 
+---
 
 ## 🧠 Features
 
-- Add users, movies, and ratings via console
-- Store data using CSV files and load them with file handling
-- Use of `ArrayList`, `HashMap`, and `Set` for efficient in-memory data management
-- Calculate and display average movie ratings
-- Modular codebase following separation of concerns with interfaces and implementations
+- Dynamic CSV data loading with automated path resolution
+- User activity analysis (user with most ratings, rating counts, users with no ratings)
+- Movie performance statistics (average ratings, most rated movie, unrated movies)
+- Individual movie rating drill-down by movie ID
+- Clean and robust console UI with error handling for invalid input
 
 ---
 
 ## 🛠️ Technologies Used
 
-- **Language:** Java
-- **Concepts:** OOP, Collections, File Handling
-- **Tools:** Eclipse / VS Code, Git
+- **Language:** Java 8+
+- **Concepts:** Layered Architecture, OOP, Java Collections Framework (`List`, `Map`, `Set`, `Stream API`), File I/O (`BufferedReader`, try-with-resources)
+- **Tools:** VS Code / Eclipse / CLI, Git
 
 ---
 
 ## 🚀 How to Run
 
-1. Clone the repository:
+### Command Line (PowerShell / Bash)
+1. Navigate to the `MiniProject` folder:
    ```bash
-   git clone https://github.com/prasannalakshmi-02/MovieReviewSystem.git
+   cd MiniProject
+   ```
+2. Compile the project:
+   ```bash
+   javac -d bin src/*.java src/*/*.java
+   ```
+3. Run the application:
+   ```bash
+   java -cp bin Application
+   ```
 
-
-2. Open in any IDE (Eclipse, VS Code, etc.)
-3. Ensure the CSV files (`users.csv`, `movies.csv`, `ratings.csv`) are available at the right path
-4. Run `Main.java` to interact via console
-
-
-
-## 📖 Learning Highlights
-
-* Practical implementation of object-oriented design
-* Working with Java Collections and file I/O
-* Structuring a real-world console project with layers (Model, Service, Implementation)
-* Handling CSV data parsing using `BufferedReader`
-
-
-## 👩‍💻 Author
-
-**Prasanna Lakshmi Motati**
-
-📧 [prasannalakshmimotati@gmail.com](mailto:prasannalakshmimotati@gmail.com)
-
-🔗 [LinkedIn](https://www.linkedin.com/in/prasanna-lakshmi-motati-b4462232b/)
-
-💻 [GitHub](https://github.com/prasannalakshmi-02)
-
-
-
-
-
+---

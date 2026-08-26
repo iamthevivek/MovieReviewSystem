@@ -1,4 +1,5 @@
 package Model;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,30 +13,30 @@ public class User {
 	private List<Rating> ratings;
 	
 	public User() {
-		
+		this.ratings = new ArrayList<>();
 	}
 	
 	public User(int id, String name, String gender, int age) {
-		
-		  this.id = id;
-		  this.name = name;
-		  this.gender = gender;
-		  this.age = age;
-		  ratings = new ArrayList();
-		
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+		this.age = age;
+		this.ratings = new ArrayList<>();
 	}
 	
 	public void addRating(Rating rating) {
+		if (this.ratings == null) {
+			this.ratings = new ArrayList<>();
+		}
 		ratings.add(rating);
 	}
 
-	
 	public User(int id, String name, String gender, int age, List<Rating> ratings) {
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.age = age;
-		this.ratings = ratings;
+		this.ratings = (ratings != null) ? ratings : new ArrayList<>();
 	}
 
 	public void setId(int id) {
@@ -76,30 +77,26 @@ public class User {
 	
 	public List<Rating> getRating() {
 		return ratings;
-		
 	}
 	
-
-	
+	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
 
-	
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
 		return id == other.id;
 	}
 	
+	@Override
 	public String toString() {
-		return "[ id = " + id + ", name = " + name + ", gender = " + gender + ", age = " + age + ", rating = " + ratings + "]\n";
-	
+		int ratingCount = (ratings != null) ? ratings.size() : 0;
+		return "[id=" + id + ", name=" + name + ", gender=" + gender + ", age=" + age + ", ratingsCount=" + ratingCount + "]\n";
 	}
-
 }

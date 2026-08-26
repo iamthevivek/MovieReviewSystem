@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Rating {
       
 	private User user;
-	private Movies movies;;
+	private Movies movies;
 	private int rating;
 	
 	public Rating() {
@@ -33,6 +33,10 @@ public class Rating {
 	public void setMovie(Movies movies) {
 		this.movies = movies;
 	}
+
+	public Movies getMovie() {
+		return movies;
+	}
 	
 	public Movies getMovieId() {
 		return movies;
@@ -45,13 +49,12 @@ public class Rating {
 	public int getRating() {
 		return rating;
 	}
-	
-	
 
-	
 	@Override
 	public String toString() {
-		return "[ username="+ user.getName()+", moviename= "+ movies.getName()+"rating= "+ rating+"]\n" ;
+		String userName = (user != null) ? user.getName() : "Unknown";
+		String movieName = (movies != null) ? movies.getName() : "Unknown";
+		return "[username=" + userName + ", moviename=" + movieName + ", rating=" + rating + "]\n";
 	}
 
 	@Override
@@ -70,24 +73,4 @@ public class Rating {
 		Rating other = (Rating) obj;
 		return Objects.equals(movies, other.movies) && Objects.equals(user, other.user);
 	}
-
-	
-	
-	
-}	 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+}
